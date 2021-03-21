@@ -78,3 +78,41 @@ long pop () {
     return 0;
 
 }
+
+
+/**
+ * \brief Esta função prepara uma operação aritmética envolvendo 2 operandos
+ * 
+ * A função retira os dois elementos que estão no topo da stack
+ * Cada elemento retirado é guardado em um endereço de memória 
+ * para mais tarde efetuar o push da operação aritmética envolvendo
+ * estes dois elementos
+ *
+ * @param operando1 endereço de memória que vai guardar um elemento retirado da stack
+ * @param operando2 endereço de memória que vai guardar o outro elemento retirado da stack
+ */
+
+void pop_double (long *operando1, long *operando2) {
+
+    *operando2 = pop();
+    *operando1 = pop();
+    
+}
+
+/**
+ * \brief Esta função mostra o conteúdo que está na stack
+ */
+
+void PrintStack () {
+
+    for (int i = 0; i <= pos; i++) {
+
+        printf("%ld", STACK[i]);
+
+    }
+
+    putchar('\n');
+
+    return;
+
+}
