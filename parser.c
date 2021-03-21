@@ -33,3 +33,72 @@ void parse(char * line) {
             push(operando1);
 
         }
+        else if (strcmp(token, "+") == 0) {
+
+            pop_double(&operando1, &operando2);
+            push(operando1 + operando2);
+
+        }
+
+        else if (strcmp(token, "-") == 0) {
+
+            pop_double(&operando1, &operando2);
+            push(operando1 - operando2);
+
+        }
+
+        else if (strcmp(token, "*") == 0) {
+
+            pop_double(&operando1, &operando2);
+            push(operando1 * operando2);
+
+        }
+
+        else if (strcmp(token, "/") == 0) {
+
+            pop_double(&operando1, &operando2);
+            push(operando1 / operando2);
+
+        }
+
+        else if (strcmp(token, "%") == 0) {
+
+            pop_double(&operando1, &operando2);
+            push(operando1 % operando2);
+
+        }
+
+        else if (strcmp(token, "&") == 0) {
+
+            pop_double(&operando1, &operando2);
+            push(operando1 & operando2);
+
+        }
+
+        else if (strcmp(token, "|") == 0) {
+
+            pop_double(&operando1, &operando2);
+            push(operando1 | operando2);
+
+        }
+
+        else if (strcmp(token, "^") == 0) {
+
+            pop_double(&operando1, &operando2);
+            push(operando1 ^ operando2);
+
+        }
+
+        else if (strcmp(token, "(") == 0) {
+
+            operando1 = pop();
+            push(--operando1);
+
+        }
+
+        else if (strcmp(token, ")") == 0) {
+
+            operando1 = pop();
+            push(++operando1);
+
+        }
