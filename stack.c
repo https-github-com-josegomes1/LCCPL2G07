@@ -113,6 +113,4 @@ void PrintStack () {
 
     putchar('\n');
 
-    return;
-
 }
