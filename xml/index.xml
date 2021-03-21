@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.8.17">
+  <compound refid="main_8c" kind="file"><name>main.c</name>
+    <member refid="main_8c_1ae66f6b31b5ad750f1fe042a706a4e3d4" kind="function"><name>main</name></member>
+  </compound>
+  <compound refid="parser_8c" kind="file"><name>parser.c</name>
+    <member refid="parser_8c_1a26c3b7d8bfbdf2f8b036cce8140c708b" kind="function"><name>potencia</name></member>
+    <member refid="parser_8c_1ae7e45a1b0f2ce3ff1c34eccdff425637" kind="function"><name>parse</name></member>
+  </compound>
+  <compound refid="parser_8h" kind="file"><name>parser.h</name>
+    <member refid="parser_8h_1ae7e45a1b0f2ce3ff1c34eccdff425637" kind="function"><name>parse</name></member>
+  </compound>
+  <compound refid="stack_8c" kind="file"><name>stack.c</name>
+    <member refid="stack_8c_1a6423a880df59733d2d9b509c7718d3a9" kind="define"><name>STACK_SIZE</name></member>
+    <member refid="stack_8c_1aeb70e1c7695e56df3a1ee0767941da6c" kind="variable"><name>STACK</name></member>
+    <member refid="stack_8c_1a1910d262855b71da353ed0d07a6c7823" kind="variable"><name>pos</name></member>
+    <member refid="stack_8c_1abaec816a6e4dd4cb1d4e70112b01b2e5" kind="function"><name>IsEmpty</name></member>
+    <member refid="stack_8c_1ac58ee82791c8e5f2bd410f38c169915a" kind="function"><name>IsFull</name></member>
+    <member refid="stack_8c_1a34ace9ea14f7963d831d53b6a4d79e7c" kind="function"><name>push</name></member>
+    <member refid="stack_8c_1abea78f7ba35d074a49d68afb77f48e28" kind="function"><name>pop</name></member>
+    <member refid="stack_8c_1a540185d45c89d8413108e0c0a75a0958" kind="function"><name>pop_double</name></member>
+    <member refid="stack_8c_1a7aeed04bb4cb6fc409ffe0144bdb8f3c" kind="function"><name>PrintStack</name></member>
+  </compound>
+  <compound refid="stack_8h" kind="file"><name>stack.h</name>
+    <member refid="stack_8h_1a556f3d4ad53b32062d1aeaff9688133c" kind="function"><name>push</name></member>
+    <member refid="stack_8h_1abea78f7ba35d074a49d68afb77f48e28" kind="function"><name>pop</name></member>
+    <member refid="stack_8h_1aad010b608ced490642139b7ef4539207" kind="function"><name>pop_double</name></member>
+    <member refid="stack_8h_1a7aeed04bb4cb6fc409ffe0144bdb8f3c" kind="function"><name>PrintStack</name></member>
+  </compound>
+</doxygenindex>
