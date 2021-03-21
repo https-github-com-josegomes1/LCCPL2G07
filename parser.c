@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+int potencia (int, int);
+
 /**
  * \brief Esta função divide a linha em tokens e interpreta os mesmos
  * 
@@ -51,6 +53,12 @@ void parse(char * line) {
 
             pop_double(&operando1, &operando2);
             push(operando1 * operando2);
+
+        }
+        else if (strcmp(token, "#") == 0) {
+
+            pop_double(&operando1, &operando2);
+            push(potencia(operando1, operando2));
 
         }
 
@@ -102,3 +110,25 @@ void parse(char * line) {
             push(++operando1);
 
         }
+        else if (strcmp(token, "~") == 0) {
+
+            operando1 = pop();
+            push(~operando1);
+
+        }
+
+    }
+
+}
+
+/**
+ * \brief Esta função faz a operação de exponenciação 
+ */
+
+int potencia (int base, int expoente) {
+    int resultado = 1;
+    for (int i = 0; i < expoente; i++) {
+        resultado *= base;
+    }
+    return resultado;
+}
