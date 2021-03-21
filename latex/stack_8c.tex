@@ -1,0 +1,144 @@
+\hypertarget{stack_8c}{}\doxysection{stack.\+c File Reference}
+\label{stack_8c}\index{stack.c@{stack.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}stack.\+h\char`\"{}}\newline
+Include dependency graph for stack.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{stack_8c_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}}~10240
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{stack_8c_abaec816a6e4dd4cb1d4e70112b01b2e5}{Is\+Empty}} ()
+\begin{DoxyCompactList}\small\item\em Esta função verifica se a stack está vazia. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{stack_8c_ac58ee82791c8e5f2bd410f38c169915a}{Is\+Full}} ()
+\begin{DoxyCompactList}\small\item\em Esta função verifica se a stack está cheia. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{stack_8c_a34ace9ea14f7963d831d53b6a4d79e7c}{push}} (long valor)
+\begin{DoxyCompactList}\small\item\em Esta função adiciona um elemento no topo da stack. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{stack_8c_abea78f7ba35d074a49d68afb77f48e28}{pop}} ()
+\begin{DoxyCompactList}\small\item\em Esta função retira o elemento que está no topo a stack. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{stack_8c_a540185d45c89d8413108e0c0a75a0958}{pop\+\_\+double}} (long $\ast$operando1, long $\ast$operando2)
+\begin{DoxyCompactList}\small\item\em Esta função prepara uma operação aritmética envolvendo 2 operandos. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{stack_8c_a7aeed04bb4cb6fc409ffe0144bdb8f3c}{Print\+Stack}} ()
+\begin{DoxyCompactList}\small\item\em Esta função mostra o conteúdo que está na stack. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+long \mbox{\hyperlink{stack_8c_aeb70e1c7695e56df3a1ee0767941da6c}{S\+T\+A\+CK}} \mbox{[}\mbox{\hyperlink{stack_8c_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}}\mbox{]}
+\item 
+int \mbox{\hyperlink{stack_8c_a1910d262855b71da353ed0d07a6c7823}{pos}} = -\/1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{stack_8c_a6423a880df59733d2d9b509c7718d3a9}\label{stack_8c_a6423a880df59733d2d9b509c7718d3a9}} 
+\index{stack.c@{stack.c}!STACK\_SIZE@{STACK\_SIZE}}
+\index{STACK\_SIZE@{STACK\_SIZE}!stack.c@{stack.c}}
+\doxysubsubsection{\texorpdfstring{STACK\_SIZE}{STACK\_SIZE}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE~10240}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{stack_8c_abaec816a6e4dd4cb1d4e70112b01b2e5}\label{stack_8c_abaec816a6e4dd4cb1d4e70112b01b2e5}} 
+\index{stack.c@{stack.c}!IsEmpty@{IsEmpty}}
+\index{IsEmpty@{IsEmpty}!stack.c@{stack.c}}
+\doxysubsubsection{\texorpdfstring{IsEmpty()}{IsEmpty()}}
+{\footnotesize\ttfamily int Is\+Empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Esta função verifica se a stack está vazia. 
+
+\begin{DoxyReturn}{Returns}
+o valor 1 se estiver vazia, o valor 0 se não estiver vazia 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stack_8c_ac58ee82791c8e5f2bd410f38c169915a}\label{stack_8c_ac58ee82791c8e5f2bd410f38c169915a}} 
+\index{stack.c@{stack.c}!IsFull@{IsFull}}
+\index{IsFull@{IsFull}!stack.c@{stack.c}}
+\doxysubsubsection{\texorpdfstring{IsFull()}{IsFull()}}
+{\footnotesize\ttfamily int Is\+Full (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Esta função verifica se a stack está cheia. 
+
+\begin{DoxyReturn}{Returns}
+o valor 1 se estiver cheia, o valor 0 se não estiver cheia 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stack_8c_abea78f7ba35d074a49d68afb77f48e28}\label{stack_8c_abea78f7ba35d074a49d68afb77f48e28}} 
+\index{stack.c@{stack.c}!pop@{pop}}
+\index{pop@{pop}!stack.c@{stack.c}}
+\doxysubsubsection{\texorpdfstring{pop()}{pop()}}
+{\footnotesize\ttfamily long pop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Esta função retira o elemento que está no topo a stack. 
+
+\begin{DoxyReturn}{Returns}
+O elemento que foi retirado da stack 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stack_8c_a540185d45c89d8413108e0c0a75a0958}\label{stack_8c_a540185d45c89d8413108e0c0a75a0958}} 
+\index{stack.c@{stack.c}!pop\_double@{pop\_double}}
+\index{pop\_double@{pop\_double}!stack.c@{stack.c}}
+\doxysubsubsection{\texorpdfstring{pop\_double()}{pop\_double()}}
+{\footnotesize\ttfamily void pop\+\_\+double (\begin{DoxyParamCaption}\item[{long $\ast$}]{operando1,  }\item[{long $\ast$}]{operando2 }\end{DoxyParamCaption})}
+
+
+
+Esta função prepara uma operação aritmética envolvendo 2 operandos. 
+
+A função retira os dois elementos que estão no topo da stack Cada elemento retirado é guardado em um endereço de memória para mais tarde efetuar o push da operação aritmética envolvendo estes dois elementos
+
+
+\begin{DoxyParams}{Parameters}
+{\em operando1} & endereço de memória que vai guardar um elemento retirado da stack \\
+\hline
+{\em operando2} & endereço de memória que vai guardar o outro elemento retirado da stack \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{stack_8c_a7aeed04bb4cb6fc409ffe0144bdb8f3c}\label{stack_8c_a7aeed04bb4cb6fc409ffe0144bdb8f3c}} 
+\index{stack.c@{stack.c}!PrintStack@{PrintStack}}
+\index{PrintStack@{PrintStack}!stack.c@{stack.c}}
+\doxysubsubsection{\texorpdfstring{PrintStack()}{PrintStack()}}
+{\footnotesize\ttfamily void Print\+Stack (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Esta função mostra o conteúdo que está na stack. 
+
+\mbox{\Hypertarget{stack_8c_a34ace9ea14f7963d831d53b6a4d79e7c}\label{stack_8c_a34ace9ea14f7963d831d53b6a4d79e7c}} 
+\index{stack.c@{stack.c}!push@{push}}
+\index{push@{push}!stack.c@{stack.c}}
+\doxysubsubsection{\texorpdfstring{push()}{push()}}
+{\footnotesize\ttfamily void push (\begin{DoxyParamCaption}\item[{long}]{valor }\end{DoxyParamCaption})}
+
+
+
+Esta função adiciona um elemento no topo da stack. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em valor} & O valor que vai ser inserido na stack \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{stack_8c_a1910d262855b71da353ed0d07a6c7823}\label{stack_8c_a1910d262855b71da353ed0d07a6c7823}} 
+\index{stack.c@{stack.c}!pos@{pos}}
+\index{pos@{pos}!stack.c@{stack.c}}
+\doxysubsubsection{\texorpdfstring{pos}{pos}}
+{\footnotesize\ttfamily int pos = -\/1}
+
+\mbox{\Hypertarget{stack_8c_aeb70e1c7695e56df3a1ee0767941da6c}\label{stack_8c_aeb70e1c7695e56df3a1ee0767941da6c}} 
+\index{stack.c@{stack.c}!STACK@{STACK}}
+\index{STACK@{STACK}!stack.c@{stack.c}}
+\doxysubsubsection{\texorpdfstring{STACK}{STACK}}
+{\footnotesize\ttfamily long S\+T\+A\+CK\mbox{[}\mbox{\hyperlink{stack_8c_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}}\mbox{]}}
+
