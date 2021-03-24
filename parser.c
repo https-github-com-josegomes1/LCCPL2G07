@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int potencia (int, int);
+long potencia (int, int);
 
 /**
  * \brief Esta função divide a linha em tokens e interpreta os mesmos
@@ -128,8 +128,8 @@ void parse(char * line) {
  * \brief Esta função faz a operação de exponenciação 
  */
 
-int potencia (int base, int expoente) {
-    int resultado = 1;
+long potencia (long base, long expoente) {
+    long resultado = 1;
     for (int i = 0; i < expoente; i++) {
         resultado *= base;
     }
