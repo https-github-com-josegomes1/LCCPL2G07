@@ -8,12 +8,23 @@
 #include <stdlib.h>
 #include "stack.h"
 
-#define STACK_SIZE 10240
-#define STACK_EMPTY (-1)
-#define STACK_FULL 10239
+/*
+ * Tamanho do array STACK
+ */
 
-long STACK[STACK_SIZE]; 
-int pos = STACK_EMPTY; // A posição que contém a posição do topo da stack, sendo -1 quando a stack está vazia
+#define STACK_SIZE 10240
+
+/**
+ * O array que carrega os valores da STACK;
+ */
+
+long STACK[STACK_SIZE];
+
+/**
+ * A posição que contém o index do topo da stack, sendo -1 quando a stack está vazia
+ */
+
+int pos = STACK_EMPTY;
 
 /**
  * \brief Esta função verifica se a stack está vazia
@@ -26,7 +37,7 @@ int IsStackEmpty () {
 
     int stack_vazia = 0;
 
-    if (pos == STACK_EMPTY) stack_vazia = 1;
+    if (pos == -1) stack_vazia = 1;
 
     return stack_vazia;
 
@@ -43,7 +54,7 @@ int IsStackFull () {
 
     int stack_cheia = 0;
 
-    if (pos == STACK_FULL) stack_cheia = 1;
+    if (pos == STACK_SIZE - 1) stack_cheia = 1;
 
     return stack_cheia;
 
