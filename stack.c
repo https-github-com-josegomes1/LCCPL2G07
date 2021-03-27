@@ -1,7 +1,5 @@
 /**
- * 
  * @file Ficheiro que contém as funcionalidades relativas a stack do projeto
- * 
  */
 
 #include <stdio.h>
