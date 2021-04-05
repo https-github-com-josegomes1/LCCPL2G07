@@ -1,6 +1,4 @@
-/**
- * @file Ficheiro que contém as funcionalidades relativas ao parser do projeto
- */
+/** @file Ficheiro que contém as funcionalidades relativas ao parser do projeto */
 
 #include <assert.h>
 #include "parser.h"
