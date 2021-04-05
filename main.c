@@ -1,9 +1,4 @@
-/**
- * 
- * @file Ficheiro principal do programa
- * 
- */
-
+/** @file Ficheiro principal do programa */
 
 #include <stdio.h>
 #include <stdlib.h>
