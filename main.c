@@ -1,29 +1,25 @@
-/** @file Ficheiro principal do programa */
-
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
-#include <string.h>
-#include "parser.h"
-#include "stack.h"
 
-/**
- * \brief Esta é a função principal do programa
- *
- * @returns o valor 0
- *  
- */
+#include "stack.h"
+#include "parser.h"
+#include "IO.h"
 
 int main () {
 
+    STACK s;
     char line[10240];
 
-    assert (fgets(line, 10240, stdin) != NULL);
-    assert ( line [strlen(line) - 1] == '\n');
+    create_stack(&s);
+    default_variables(&s);
 
-    parse(line);
-    PrintStack();
-    
+    assert(fgets(line, 10240, stdin) != NULL);
 
-    return 0;
+    parse(&s, line);
+
+    print_stack(&s);
+
+    return 0; 
+
 }
