@@ -1,4 +1,4 @@
-/** @file Ficheiro que contém as funcionalidades relativas ao parser do projeto */
+/** @file Ficheiro que contém as funcionalidades relativas ao parser */
 
 #include <string.h>
 #include <stdlib.h>
@@ -6,175 +6,104 @@
 #include <math.h>
 
 #include "stack.h"
-#include "array.h"
+#include "parser.h"
 #include "IO.h"
 #include "math.h"
+#include "lexer.h"
+#include "logic.h"
 
-/**
- * \brief Esta função divide a linha em tokens e interpreta os mesmos 
- */
+void parse_plus(STACK *s) {
+    // if (Is_array(s)) return; 
+    // if (Is_String(s)) return;
+    sum(s);                     // SOMA
+}
+
+void parse_asterisk(STACK *s) {
+    // if (Is_array(s)) return;  // CONCATENAÇÃO MÚLTIPLA
+    // if (Is_String(s)) return; // CONCATENAÇÃO MÚLTIPLA
+    multiplication(s);           // MULTIPLICAÇÃO
+}
+
+void parse_slash(STACK *s) {
+    // if (Is_array(s)) return;  // 
+    // if (Is_String(s)) return; // 
+    division(s);  
+}
+
+void parse_left_parenthesis(STACK *s) {
+    // if (Is_array(s)) return;  //
+    // if (Is_String(s)) return; //
+    decrement(s);  
+}
+
+void parse_right_parenthesis(STACK *s) {
+    // if (Is_array(s)) return;  //
+    // if (Is_String(s)) return; //
+    increment(s);  
+}
+
+void parse_percentage(STACK *s) {
+    // if (Is_array(s)) return;  //
+    // if (Is_String(s)) return; //
+    module(s);  
+}
+
+void parse_tilde(STACK *s) {
+    // if (Is_array(s)) return;  //
+    // if (Is_String(s)) return; //
+    not_bitwise(s);  
+}
+
+void parse_equal(STACK *s) {
+    // if (Is_array(s)) return;  //
+    // if (Is_String(s)) return; //
+    Is_equal(s);
+}
+
+void parse_less_than(STACK *s) {
+   //  if (Is_array(s)) return;  //
+   //  if (Is_String(s)) return; //
+    Is_lower(s);
+}
+
+void parse_more_than(STACK *s) {
+   //  if (Is_array(s)) return;  //
+    // if (Is_String(s)) return; //
+    Is_greater(s);
+}
+
+void parse_pop(STACK *s) {pop(s);}
+
+void parse_number(STACK *s, char *token) {
+    if (Is_Double(token)) push_DOUBLE(s,convert_string_to_double(token)); // TOKEN -> DOUBLE
+    else push_INT(s, convert_string_to_int(token));                       // TOKEN -> INT
+}
+
+void parse_operators(STACK *s, char *token) {
+    char **operators = get_operators_token();
+    parse_operators_function *func_ptr = get_operators_function();
+
+    for (int i = 0; i < 34; i++) {
+        if (strcmp(token, operators[i]) == 0) {
+            func_ptr[i](s); return;
+        }   
+    }
+}
+
+int parse_operands(STACK *s, char *token) {
+    int *operands = get_operands_state(token);
+    parse_operands_function *func_ptr = get_operands_function();
+
+    for(int i = 0; i < 3; i++) {
+        if (operands[i]) {
+            func_ptr[i](s, token); return 1;
+        }
+    }
+    return 0;
+}
 
 void parse(STACK * s, char* line) {
-
-    char *rest;
-    int pos_array = 0, int1, int2;
-    double double1, double2;
-
     for (char* token = strtok(line, " \t\n"); token != NULL; token = strtok(NULL, " \t\n")) {
-
-        int1 = strtol(token, &rest, 10);
-
-        if (strlen(rest) == 0) { // Ler int
-            push_INT(s, int1); continue;
-        }
-
-        double1 = strtod(token, &rest);
-
-        if (strlen(rest) == 0) { // Ler double
-            push_DOUBLE(s, double1); continue;
-        }
-
-        // Arrays
-
-        if (*token == '[') {
-            pos_array = s->pos; continue;
-        }
-
-        if (*token == ']') {
-            create_array(s, s->pos - pos_array); continue;
-        }
-
-        // Variables
-
-        if (*token >= 'A' && *token <= 'Z' && token[1] == '\0') {
-            push(s, s->variables[*token - 65]); continue;
-        }
-
-        if (*token == ':') {
-            token++;
-            s->variables[*token - 65] = top(s); continue;
-        }
-
-        // Math
-
-        if (!Is_array(s) && !Is_String(s)) {
-
-            // Operações aritméticas
-
-            switch(*token) {
-                case '+': 
-                    double1 = pop_operand(s); 
-                    double2 = pop_operand(s); 
-                    push_binary_operation(s, double2 + double1); continue;
-
-                case '-':
-                    double1 = pop_operand(s); 
-                    double2 = pop_operand(s); 
-                    push_binary_operation(s, double2 - double1); continue;
-
-                case '*': 
-                    double1 = pop_operand(s); 
-                    double2 = pop_operand(s); 
-                    push_binary_operation(s, double2 * double1); continue;
-
-                case '/': 
-                    double1 = pop_operand(s); 
-                    double2 = pop_operand(s); 
-                    push_binary_operation(s, double2 / double1); continue;
-
-                case '#': 
-                    double1 = pop_operand(s); 
-                    double2 = pop_operand(s); 
-                    push_binary_operation(s, pow(double2, double1)); continue;
-
-                case '%': 
-                    int1 = pop_operand(s); 
-                    int2 = pop_operand(s); 
-                    push_binary_operation(s, int2 % int1); continue;
-
-                case '|': 
-                    int1 = pop_operand(s); 
-                    int2 = pop_operand(s); 
-                    push_binary_operation(s, int2 | int1); continue;
-
-                case '&': 
-                    int1 = pop_operand(s); 
-                    int2 = pop_operand(s); 
-                    push_binary_operation(s, int2 & int1); continue;
-
-                case '^': 
-                    int1 = pop_operand(s);
-                    int2 = pop_operand(s); 
-                    push_binary_operation(s, int2 ^ int1); continue;
-
-                case '~': 
-                    int1 = pop_operand(s); 
-                    push_unary_operation(s, ~int1); continue;
-
-                case '(': 
-                    double1 = pop_operand(s); 
-                    push_unary_operation(s, --double1); continue;
-
-                case ')': 
-                    double1 = pop_operand(s); 
-                    push_unary_operation(s, ++double1); continue;
-            }
-
-            // Operações lógicas
-
-            switch(*token) {
-                case '!': push_INT(s, !pop_operand(s)); continue;
-                case '=': push_INT(s, pop_operand(s) == pop_operand(s)); continue;
-                case '<': push_INT(s, pop_operand(s) > pop_operand(s)); continue;
-                case '>': push_INT(s, pop_operand(s) < pop_operand(s)); continue;
-                case '?': if_then_else(s); continue;
-                case 'e': token++; get_logic_state(s, *token); continue;
-            }
-        }
-
-        if(Is_array(s)) {
-            switch(*token) {
-                case ',': range_array(s); continue;
-                case '*': multiply_array(s); continue;
-                case '=': element_by_index(s); continue;
-                case '~': array_to_stack(s); continue;
-                case '+': concatenate_array(s); continue;
-                case '(': remove_first_element(s); continue;
-                case ')': remove_last_element(s); continue;
-                case '<': get_elements_by_first (s); continue;
-                case '>': get_elements_by_last(s); continue;
-            }
-        }
-
-        if (Is_String(s)) {
-            switch(*token) {
-                case '+': continue;
-                case '*': continue;
-                case ',': continue;
-                case '<': continue;
-                case '>': continue;
-                case '(': continue;
-                case ')': continue;
-                case '#': continue;
-                case 't': continue;
-                case '/': continue;
-                case 'S': continue;
-                case 'N': continue;
-            }
-        }
-
-        switch(*token) {
-            case '\\': swap_data(s); continue;
-            case ';': pop(s); continue;
-            case '@': rotate_top(s); continue;
-            case '$': copy_nth_element(s); continue;
-            case '_': push(s, top(s)); continue;
-            case 'l': read_line(s, line); continue;
-            case 'p': print_data(top(s)); continue;
-            case 'c': convert_to_char(s); continue;
-            case 'f': convert_to_float(s); continue;
-            case 'i': convert_to_int(s); continue;
-            case 's': convert_to_string(s); continue;
-        }
+        if (!parse_operands(s, token)) parse_operators(s, token);
     }
 }
