@@ -50,10 +50,10 @@ int parse_operands(STACK *s, char *token);
 /** \brief Divide a string em tokens e passa-os para outra função analisar */
 void parse(STACK *s, char*);
 
-/** \typedef parse_operators_function - apontador para funções de operadores */
+/** \brief parse_operators_function - apontador para funções de operadores */
 typedef void (*parse_operators_function)(STACK*s);
 
-/** \typedef parse_operands_function - apontador para funções de operandos */
+/** \brief parse_operands_function - apontador para funções de operandos */
 typedef void (*parse_operands_function) (STACK*s, char *token);
 
 #endif
