@@ -12,66 +12,16 @@
 #include "lexer.h"
 #include "logic.h"
 
-void parse_plus(STACK *s) {
-    // if (Is_array(s)) return; 
-    // if (Is_String(s)) return;
-    sum(s);                     // SOMA
-}
-
-void parse_asterisk(STACK *s) {
-    // if (Is_array(s)) return;  // CONCATENAÇÃO MÚLTIPLA
-    // if (Is_String(s)) return; // CONCATENAÇÃO MÚLTIPLA
-    multiplication(s);           // MULTIPLICAÇÃO
-}
-
-void parse_slash(STACK *s) {
-    // if (Is_array(s)) return;  // 
-    // if (Is_String(s)) return; // 
-    division(s);  
-}
-
-void parse_left_parenthesis(STACK *s) {
-    // if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    decrement(s);  
-}
-
-void parse_right_parenthesis(STACK *s) {
-    // if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    increment(s);  
-}
-
-void parse_percentage(STACK *s) {
-    // if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    module(s);  
-}
-
-void parse_tilde(STACK *s) {
-    // if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    not_bitwise(s);  
-}
-
-void parse_equal(STACK *s) {
-    // if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    Is_equal(s);
-}
-
-void parse_less_than(STACK *s) {
-   //  if (Is_array(s)) return;  //
-   //  if (Is_String(s)) return; //
-    Is_lower(s);
-}
-
-void parse_more_than(STACK *s) {
-   //  if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    Is_greater(s);
-}
-
+void parse_plus(STACK *s) {sum(s);}
+void parse_asterisk(STACK *s) {multiplication(s);}
+void parse_slash(STACK *s) {division(s);}
+void parse_left_parenthesis(STACK *s) {decrement(s);}
+void parse_right_parenthesis(STACK *s) {increment(s);}
+void parse_percentage(STACK *s) {module(s);}
+void parse_tilde(STACK *s) {not_bitwise(s);}
+void parse_equal(STACK *s) {Is_equal(s);}
+void parse_less_than(STACK *s) {Is_lower(s);}
+void parse_more_than(STACK *s) {Is_greater(s);}
 void parse_pop(STACK *s) {pop(s);}
 
 void parse_number(STACK *s, char *token) {
