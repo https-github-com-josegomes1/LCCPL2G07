@@ -13,10 +13,11 @@ typedef enum {
    ARRAY    /**< um array */
 } TYPE;
 
-/** \struct struct que carrega a forma dos elementos da stack */
+/** struct que carrega a forma dos elementos da stack */
 
 typedef struct data {
    TYPE type; /**< o tipo do elemento */
+   /** carrega diferentes tipos de elementos */
    union {
       int INT; /**< o elemento quando int */
       double DOUBLE; /**< o elemento quando double */
@@ -26,7 +27,7 @@ typedef struct data {
 
 } DATA;
 
-/** \struct a stack do programa */
+/** \brief a stack do programa */
 
 typedef struct stack {
    DATA *stack; /**< os elementos da stack */
