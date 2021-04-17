@@ -1,4 +1,4 @@
-/** @file Ficheiro que contém as funcionalidades relativas ao input/output do projeto */
+/** @file Ficheiro que contém as funcionalidades relativas ao input/output */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,36 +7,39 @@
 
 #include "stack.h"
 
-/**
- * \brief verifica se o ultimo ou penultimo elemento do topo da stack é um array
- */
+double convert_string_to_double(char *string) {
+    char *rest; // variável auxiliar para acompanhar a string na função "strtod"
+    double DOUBLE = strtod(string, &rest); // STRING -> DOUBLE
+    return DOUBLE;
+}
+
+int convert_string_to_int(char *string) {
+    char *rest; // variável auxiliar para acompanhar a string na função "strtol"
+    int INT = strtol(string, &rest, 10); // STRING -> INT
+    return INT;
+}
+
+int Is_Double(char *token) {
+    for (int i = 0; token[i]; i++) {
+        if (token[i] == '.') return 1;
+    }
+    return 0;
+}
 
 int Is_array (STACK * s) {
     return s->stack[s->pos].type == ARRAY || s->stack[s->pos - 1].type == ARRAY;
 }
 
-/**
- * \brief verifica se o ultimo ou penultimo elemento do topo da stack é uma string
- */
-
 int Is_String (STACK * s) {
     return s->stack[s->pos].type == STRING || s->stack[s->pos - 1].type == STRING;
 }
 
-/**
- * \brief faz leitura de uma linha e da push da string lida para a stack
- */
-
-void read_line(STACK * s, char * line) {
-    char * input = strdup(line);
+void read_line(STACK * s) {
+    char * input = malloc(sizeof(char) * 10240);
     assert(fgets(input, 10240, stdin) != NULL);
     input[strlen(input) - 1] = '\0';
     push_STRING(s, input);
 }
-
-/**
- * \brief da printf da data consoante o tipo
- */
 
 void print_data(DATA data) {
     switch(data.type) {
@@ -47,10 +50,6 @@ void print_data(DATA data) {
         case ARRAY: break;
     }
 }
-
-/**
- * \brief da printf de todos os elementos da stack
- */
 
 void print_stack(STACK *s) {
     for (int i = 0; i <= s->pos; i++) {
