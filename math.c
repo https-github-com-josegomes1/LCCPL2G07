@@ -1,109 +1,73 @@
-/** @file Ficheiro que contém as funcionalidades relativas a operações aritmética e lógica */
+/** @file Ficheiro que contém as funcionalidades relativas a operações aritmética */
 
+#include <math.h>
 #include "stack.h"
 
-/**
- * \brief da push a um elemento resultante de uma operação unária, consoante o seu tipo
- */
-
-void push_unary_operation(STACK *s, double val) {
-    if (s->stack[s->pos + 1].type == DOUBLE) {push_DOUBLE(s, val); return;}
-    if (s->stack[s->pos + 1].type == INT) {push_INT(s, val); return;}
-    push_CHAR(s, val);
+void sum(STACK *s) {                  // 1 2 3 <- STACK -> VALORES <> 3 1.5 2 <- STACK -> VALORES
+    double x = pop_operand(s),        // 1 2   <- pop   -> 3       <> 3 1.5   <- pop   -> 2
+           y = pop_operand(s);        // 1     <- pop   -> 2       <> 3       <- pop   -> 1.5
+    push_binary_operation(s, y + x);  // 1 5   <- push  -> 2+3=5   <> 3 3.5   <- push  -> 1.5+2=3.5
 }
 
-/**
- * \brief da push a um elemento resultante de uma operação binária, consoante o seu tipo
- */
-
-void push_binary_operation(STACK *s, double val) {
-    if (s->stack[s->pos + 1].type == DOUBLE || s->stack[s->pos + 2].type == DOUBLE) {push_DOUBLE(s, val); return;}
-    push_INT(s, val);
+void subtraction(STACK *s) {          // 1 5 3 <- STACK -> VALORES <> 3 2 0.5 <- STACK -> VALORES
+    double x = pop_operand(s),        // 1 5   <- pop   -> 3       <> 3 2     <- pop   -> 0.5
+           y = pop_operand(s);        // 1     <- pop   -> 5       <> 3       <- pop   -> 2
+    push_binary_operation(s, y - x);  // 1 2   <- push  -> 5-3=2   <> 3 1.5   <- push  -> 2-0.5=1.5
 }
 
-/**
- * \brief devolve o elemento do topo da stack consoante o seu tipo
- */
-
-double pop_operand(STACK *s) {
-    if (s->stack[s->pos].type == INT) return s->stack[s->pos--].INT;
-    if (s->stack[s->pos].type == DOUBLE) return s->stack[s->pos--].DOUBLE;
-    else return s->stack[s->pos--].CHAR;
+void multiplication(STACK *s) {       // 1 2 3 <- STACK -> VALORES <> 1 2.3 3 <- STACK -> VALORES
+    double x = pop_operand(s),        // 1 2   <- pop   -> 3       <> 1 2.3   <- pop   -> 3 
+           y = pop_operand(s);        // 1     <- pop   -> 2       <> 1       <- pop   -> 2.3
+    push_binary_operation(s, y * x);  // 1 6   <- push  -> 2*3=6   <> 1 6.9   <- push  -> 2.3*3=6.9
 }
 
-/**
- * \brief da push do penultimo ou ultimo elemento, consoante o elemento que está na posição corresponde ao IF
- */
-
-void if_then_else (STACK *s) {
-    double IF; DATA THEN, ELSE;
-    ELSE = pop(s); THEN = pop(s); IF = pop_operand(s);
-    if (IF) {push(s, THEN); return;}
-    push(s, ELSE);
+void division(STACK *s) {            // 1 7 3 <- STACK -> VALORES <> 1 7.0 3 <- STACK -> VALORES
+    double x = pop_operand(s),       // 1 7   <- pop   -> 3       <> 1 7.0   <- pop   -> 3
+           y = pop_operand(s);       // 1     <- pop   -> 7       <> 1       <- pop   -> 7.0
+    push_binary_operation(s, y / x); // 1 2   <- push  -> 7/3=2   <> 1 3.5   <- push  -> 7.0/3=3.5
 }
 
-/**
- * \brief da pop aos dois ultimos elementos e push no menor deles
- */
-
-void get_lower(STACK *s) {
-    DATA data1 = s->stack[s->pos], 
-         data2 = s->stack[s->pos - 1];
-    double op1 = pop_operand(s),
-           op2 = pop_operand(s);
-    if (op1 < op2) {push(s, data1); return;}
-    push(s, data2);
+void power(STACK *s) {                   // 1 2 3 <- STACK -> VALORES <> 1 9 0.5 <- STACK -> VALORES
+    double x = pop_operand(s),           // 1 2   <- pop   -> 3       <> 1 9     <- pop   -> 0.5 
+           y = pop_operand(s);           // 1     <- pop   -> 2       <> 1       <- pop   -> 9
+    push_binary_operation(s, pow(y,x));  // 1 8   <- push  -> 2^3=8   <> 1 3.0   <- push  -> 9^0.5=3.0                    
 }
 
-/**
- * \brief da pop aos dois ultimos elementos e push no maior deles
- */
-
-void get_higher(STACK *s) {
-    DATA data1 = s->stack[s->pos], 
-         data2 = s->stack[s->pos - 1];
-    double op1 = pop_operand(s),
-           op2 = pop_operand(s);
-    if (op1 > op2) {push(s, data1); return;}
-    push(s, data2);
+void module(STACK *s) {               // 1 7 3 <- STACK -> VALORES
+    int x = pop_INT(s),               // 1 7   <- pop   -> 3
+        y = pop_INT(s);               // 1     <- pop   -> 7
+    push_binary_operation(s, y % x);  // 1 1   <- push  -> 7 % 3 = 1
 }
 
-/**
- * \brief efetua um ou lógico entre os dois últimos elementos
- * 
- */
+void or_bitwise(STACK *s) {          // 1 2 3 <- STACK -> VALORES
+    int x = pop_INT(s),              // 1 2   <- pop   -> 3
+        y = pop_INT(s);              // 1     <- pop   -> 2
+    push_binary_operation(s, y | x); // 1 3   <- push  -> (10) | (11) -> (11) em base 2
+}                                    //                    2      3   ->  3   em decimal
 
-void or_shortcut(STACK *s) {
-    DATA data1 = s->stack[s->pos], 
-         data2 = s->stack[s->pos - 1];
-    double op1 = pop_operand(s),
-           op2 = pop_operand(s);
-    if (op2) {push(s, data2); return;}
-    if (op1) {push(s, data1); return;}
-    push_INT(s, 0); 
+void and_bitwise(STACK *s) {         // 1 2 3 <- STACK -> VALORES
+    int x = pop_INT(s),              // 1 2   <- pop   -> 3
+        y = pop_INT(s);              // 1     <- pop   -> 2
+    push_binary_operation(s, y & x); // 1 3   <- push  -> (10) & (11) -> (10) em base 2
+}                                    //                    2      3   ->  2   em decimal
+
+void xor_bitwise(STACK *s) {          // 1 2 3 <- STACK -> VALORES <>
+    int x = pop_INT(s),               // 1 2   <- pop   -> 3
+        y = pop_INT(s);               // 1     <- pop   -> 2
+    push_binary_operation(s, y ^ x);  // 1 3   <- push  -> (10) & (11) -> (01) em base 2
+}                                     //                    2      3   ->  1   em decimal
+
+void not_bitwise(STACK *s) {      // 1  2 <- STACK 
+    int x = pop_operand(s);       // 1    <- pop  ->  2 -> (010) em base 2, complemento para 2 
+    push_unary_operation(s, ~x);  // 1 -3 <- push -> (101) em base 2, complemento para 2
+}                                 //                  -3   em decimal
+
+void increment(STACK *s) {           // 3 1 <- STACK -> VALORES <> 'B' <- STACK -> VALORES   <> 0.3 <- STACK -> VALORES
+    double x = pop_operand(s);       // 3   <- pop   -> 1       <>     <- pop   -> 'B'       <>     <- pop   -> 0.3
+    push_unary_operation(s, x + 1); // 3 2 <- push  -> 1+1=2   <> 'C' <- push  -> 'B'+1='C' <> 1.3 <- push  -> 0.3+1=1.3
 }
 
-/**
- * \brief efetua um e lógico entre os dois últimos elementos
- */
-
-void and_shortcut(STACK *s) {
-    DATA data1 = s->stack[s->pos];
-    double op1 = pop_operand(s),
-           op2 = pop_operand(s);
-    if (op1 == 0 || op2 == 0) {push_INT(s, 0); return;}
-    push(s, data1);
-}
-
-/**
- * \brief efetua uma operação consoante o token
- */
-
-void get_logic_state(STACK *s, char token) {
-    switch(token) {
-        case '>': get_higher(s); break;
-        case '<': get_lower(s); break;
-        case '|': or_shortcut(s); break;
-        case '&': and_shortcut(s); break;
-    }
+void decrement(STACK *s){            // 3 1 <- STACK -> VALORES <> 'B' <- STACK -> VALORES   <> 0.3 <- STACK -> VALORES
+    double x = pop_operand(s);       // 3   <- pop   -> 1       <>     <- pop   -> 'B'       <>     <- pop   -> 0.3
+    push_unary_operation(s, x - 1); // 3 0 <- push  -> 1-1=0   <> 'A' <- push  -> 'B'-1='A' <> 1.3 <- push  -> 0.3-1=-0.7
 }
