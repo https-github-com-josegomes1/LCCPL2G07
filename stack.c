@@ -7,7 +7,7 @@
 
 STACK* create_stack () {
     STACK *s = malloc(sizeof(STACK));
-    s->pos = -1; // -1 -> posição inicial: representa que a stack que está vazia
+    s->pos = -1; // -1 -> posição inicial: representa que a stack está vazia
     s->size = 32; // Definimos um tamanho inicial para a stack e aumentamos conforme seja preciso
     s->stack = malloc(sizeof(DATA) * s->size);
     s->variables = malloc(sizeof(DATA) * 26); // 26 -> Variáveis de A até Z
@@ -15,7 +15,7 @@ STACK* create_stack () {
 }
 
 void push(STACK *s, DATA elem) {
-    if (s->pos == s->size - 1) { // Se a stack estiver cheia, aumentamos ela
+    if (s->pos == s->size - 1) { // Se a stack estiver cheia, aumentamo-la
         s->size += 32;           // assim enquanto houver espaço na nossa memória física, há espaço na stack
         s->stack = realloc(s->stack, sizeof(DATA) * s->size);
     }
