@@ -36,4 +36,16 @@ void sort_by_block(STACK *s);
 /** \brief executa um bloco e depois da pop de um elemento, se for diferente de 0, executa novamente */
 void execute_while_true(STACK *s);
 
+/** \brief troca o valor que está no endereço de memória entre dois inteiros */
+void swap(int *x, int *y);
+
+/** \brief troca o valor que está no endereço de memória entre duas strings */
+void swap_STRINGS(char **x, char **y);
+
+/** \brief ordena um array consoante as strings */
+void bubbleSort_String(int pos_array[], char* strings[], int N);
+
+/** \brief ordena um array consoante os inteiros */
+void bubbleSort(int pos_array[], int array[], int N);
+
 #endif
