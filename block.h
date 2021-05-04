@@ -3,6 +3,9 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+/** \brief recebe um token do tipo bloco e obtém o conteúdo que está entre os "{" e "}" mais externos */
+char* get_block_content(char *block);
+
 /** \brief executa um bloco: da parse dos tokens presentes no bloco */
 void execute_block(STACK *s);
 
