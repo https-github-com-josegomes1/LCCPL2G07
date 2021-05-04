@@ -1,3 +1,5 @@
+/** @file Arquivo que contém as funções do logic.c */
+
 #ifndef LOGIC_H
 #define LOGIC_H
 
@@ -29,5 +31,8 @@ void and_logic(STACK *s);
 
 /** \brief da push do penultimo ou ultimo elemento, consoante o elemento que está na posição corresponde ao IF */
 void if_then_else (STACK *s);
+
+/** \brief função intermédia que determina o tipo de operação do token começado em "e", podendo ser e>, e<, e| ou e& */
+void logic_shortcut (STACK *s, char *token);
 
 #endif
