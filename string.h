@@ -44,6 +44,9 @@ void get_string_elements_by_last (STACK *s);
 /** \brief procura uma substring e devolve o indice que ela ocorre ou -1 se não ocorrer */
 void search_substring(STACK *s);
 
+/** \brief separa uma string de acordo com a substring passada com parâmetro delimits */
+void separate_string(STACK *s, char *delimits);
+
 /** \brief separa uma string por substrings em um array */
 void separate_string_by_substring(STACK *s);
 
