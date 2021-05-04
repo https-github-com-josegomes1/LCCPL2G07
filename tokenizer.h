@@ -3,7 +3,7 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
-/** \struct a struct que carrega os tokens */
+/** a struct que carrega os tokens */
 
 typedef struct tokenizer {
     char *token; /**< o token */
