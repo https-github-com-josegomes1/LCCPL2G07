@@ -30,7 +30,13 @@ void filter_string(STACK *s);
 /** \brief função intermédia para determinar se a operação do token "," será feita em uma string ou array */
 void filter_by_block(STACK *s);
 
-/** \brief ordena um bloco consoante as condições que vão ser analisadas no parser */
+/** \brief ordena um array de números consoante as condições que estão dentro do bloco */
+void sort_by_number(STACK *s, int array_size, int pos_array[]);
+
+/** \brief ordena um array de strings consoante as condições que estão dentro do bloco */
+void sort_by_string(STACK *s, int array_size, int pos_array[]);
+
+/** \brief ordena um array consoante as condições que estão dentro do bloco */
 void sort_by_block(STACK *s);
 
 /** \brief executa um bloco e depois da pop de um elemento, se for diferente de 0, executa novamente */
