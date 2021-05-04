@@ -3,7 +3,7 @@
 #ifndef STACK_H
 #define STACK_H
 
-/** \enum a enumeração dos tipos que os elementos podem ter */
+/** a enumeração dos tipos que os elementos podem ter */
 
 typedef enum {
    INT = 1,     /**< um inteiro */
@@ -14,15 +14,19 @@ typedef enum {
    BLOCK = 32 /**< um bloco */
 } TYPE;
 
+/** \macro efetua um OU LÓGICO (bitwise) para definir o valor INTEGER como um INT ou CHAR */
 #define INTEGER  (INT | CHAR)
+/** \macro efetua um OU LÓGICO (bitwise) para definir o valor NUMBER como um INTEGER ou NUMBER */
 #define NUMBER   (INTEGER | DOUBLE)
 
+/** struct que defini o array */
+
 typedef struct {
-   int size;
-   struct data *elems;
+   int size; /**< o tamanho do array */
+   struct data *elems; /**< os elementos do array */
 } ARRAYS;
 
-/** \struct carrega a forma dos elementos da stack */
+/** carrega a forma dos elementos da stack */
 
 typedef struct data {
    TYPE type; /**< o tipo do elemento */
@@ -38,7 +42,7 @@ typedef struct data {
 
 } DATA;
 
-/** \struct a stack do programa */
+/** a stack do programa */
 
 typedef struct stack {
    DATA *stack; /**< os elementos da stack */
@@ -47,6 +51,7 @@ typedef struct stack {
    int pos; /**< a posição em que se encontra o elemento do topo da stack */
 } STACK;
 
+/** \brief compara o tipo do elemento com a máscara */
 int has_type(DATA elem, int mask);
 
 /** \brief Inicializa os valores da stack */ 
