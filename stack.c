@@ -5,48 +5,53 @@
 
 #include "stack.h"
 
+int has_type(DATA elem, int mask) {
+  return (elem.type & mask) != 0;
+}
+
 STACK* create_stack () {
     STACK *s = malloc(sizeof(STACK));
-    s->pos = -1; // -1 -> posição inicial: representa que a stack está vazia
-    s->size = 32; // Definimos um tamanho inicial para a stack e aumentamos conforme seja preciso
+    s->pos = -1; // -1 -> posição inicial: representa que a stack que está vazia
+    s->size = 128; // Definimos um tamanho inicial para a stack e aumentamos conforme seja preciso
     s->stack = malloc(sizeof(DATA) * s->size);
-    s->variables = malloc(sizeof(DATA) * 26); // 26 -> Variáveis de A até Z
     return s;
 }
 
 void push(STACK *s, DATA elem) {
-    if (s->pos == s->size - 1) { // Se a stack estiver cheia, aumentamo-la
-        s->size += 32;           // assim enquanto houver espaço na nossa memória física, há espaço na stack
+    if (s->pos == s->size - 1) { // Se a stack estiver cheia, aumentamos ela
+        s->size *= 2;           // assim enquanto houver espaço na nossa memória física, há espaço na stack
         s->stack = realloc(s->stack, sizeof(DATA) * s->size);
     }
     s->stack[++s->pos] = elem;
 }
 
 DATA pop(STACK *s) {
-    return s->stack[s->pos--];
+    if (s->pos != -1)
+        return s->stack[s->pos--];
+    return s->stack[s->pos];
 }
 
 DATA top (STACK *s) {
     return s->stack[s->pos];
 }
 
-void push_unary_operation(STACK *s, double val) {                           // val tipo -> push tipo
-    if (s->stack[s->pos + 1].type == DOUBLE) {push_DOUBLE(s, val); return;} // DOUBLE   -> DOUBLE
-    if (s->stack[s->pos + 1].type == INT) {push_INT(s, val); return;}       // DOUBLE   -> INT
-    push_CHAR(s, val);                                                      // DOUBLE   -> CHAR
+void push_unary_operation(STACK *s, double val) {                           
+    if (s->stack[s->pos + 1].type == DOUBLE) {push_DOUBLE(s, val); return;} 
+    if (s->stack[s->pos + 1].type == INT) {push_INT(s, val); return;}       
+    push_CHAR(s, val);                                                  
 }
 
-void push_binary_operation(STACK *s, double val) {
-    if (s->stack[s->pos + 1].type == DOUBLE || s->stack[s->pos + 2].type == DOUBLE) { // val tipo -> push tipo
-        push_DOUBLE(s, val); return;}                                                 // DOUBLE   -> DOUBLE
-    push_INT(s, val);                                                                 // DOUBLE   -> INT
+void push_binary_operation(STACK *s, long double val) {
+    if (s->stack[s->pos + 1].type == DOUBLE || s->stack[s->pos + 2].type == DOUBLE) {
+        push_DOUBLE(s, val); return;}                                            
+    push_INT(s, val);                                                                
 }
 
-double pop_operand(STACK *s) { // O double consegue armazenar os três tipos, sem trocar o valor do elemento
-    DATA elem = pop(s);                          // pop tipo -> retorna 
-    if (elem.type == INT) return elem.INT;       // INT      -> DOUBLE
-    if (elem.type == DOUBLE) return elem.DOUBLE; // DOUBLE   -> DOUBLE
-    return elem.CHAR;                            // CHAR     -> DOUBLE
+long double pop_operand(STACK *s) { // O double consegue armazenar os três tipos, sem trocar o valor do elemento
+    DATA elem = pop(s);                          
+    if (elem.type == INT) return elem.INT;      
+    if (elem.type == DOUBLE) return elem.DOUBLE;
+    return elem.CHAR;                            
 }
 
 /**
@@ -67,7 +72,8 @@ double pop_operand(STACK *s) { // O double consegue armazenar os três tipos, se
         return elem._name;                        \
     }
 
-STACK_OPERATION(int, INT)
+STACK_OPERATION(long, INT)
 STACK_OPERATION(double, DOUBLE)
 STACK_OPERATION(char, CHAR)
 STACK_OPERATION(char *, STRING)
+STACK_OPERATION(char *, BLOCK)
