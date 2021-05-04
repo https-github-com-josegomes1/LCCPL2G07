@@ -10,6 +10,8 @@
 #include "IO.h"
 #include "variables.h"
 
+/** \brief função principal do programa: cria os componentes necessários e chama as funções para efetuar a análise da linha lida */
+
 int main () {
 
     STACK *s = create_stack();
