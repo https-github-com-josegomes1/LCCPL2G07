@@ -164,6 +164,24 @@ void bubbleSort(int pos_array[], int array[], int N) {
     }
 }
 
+void sort_by_number(STACK *s, int array_size, int pos_array[]) {
+    int array[array_size];
+    for (int i = array_size - 1; i >= 0; i--) {
+        array[i] = pop_INT(s);
+        pos_array[i] = i;
+    }
+    bubbleSort(pos_array, array, array_size);
+}
+
+void sort_by_string(STACK *s, int array_size, int pos_array[]) {
+    char* strings[array_size];
+    for (int i = array_size - 1; i >= 0; i--) {
+        strings[i] = pop_STRING(s);
+        pos_array[i] = i;
+    }
+    bubbleSort_String(pos_array, strings, array_size);
+}
+
 void sort_by_block(STACK *s) {
     DATA block = pop(s);
     duplicate_top(s);
@@ -173,22 +191,11 @@ void sort_by_block(STACK *s) {
     int pos_array[array_size];
     array_to_stack(s);
     if (has_type(top(s), NUMBER)) {
-        int array[array_size];
-        for (int i = array_size - 1; i >= 0; i--) {
-            array[i] = pop_INT(s);
-            pos_array[i] = i;
-        }
-        bubbleSort(pos_array, array, array_size);
+        sort_by_number(s, array_size, pos_array);
     }
     else if (has_type(top(s), STRING)) {
-        char* strings[array_size];
-        for (int i = array_size - 1; i >= 0; i--) {
-            strings[i] = pop_STRING(s);
-            pos_array[i] = i;
-        }
-        bubbleSort_String(pos_array, strings, array_size);
+        sort_by_string(s, array_size, pos_array);
     }
-
     DATA a = pop(s);
     for (int i = 0; i < array_size; i++) {
         push(s, a.array.elems[pos_array[i]]);
