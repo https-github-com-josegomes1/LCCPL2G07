@@ -1,109 +1,108 @@
-/** @file Ficheiro que contém as funcionalidades relativas ao parser */
+/** @file Ficheiro que contém as funcionalidades relativas à análise dos tokens */
 
-#include <string.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
 
-#include "stack.h"
 #include "parser.h"
-#include "IO.h"
-#include "math.h"
+#include "handle_operations.h"
 #include "lexer.h"
-#include "logic.h"
+#include "IO.h"
+#include "array.h"
+#include "variables.h"
+#include "string.h"
 
-void parse_plus(STACK *s) {
-    // if (Is_array(s)) return; 
-    // if (Is_String(s)) return;
-    sum(s);                     // SOMA
+void parse_variables(STACK *s, char *token) {
+    if (*token == ':') copy_top_to_variable(s, token);
+    else push_variables(s, token); 
 }
-
-void parse_asterisk(STACK *s) {
-    // if (Is_array(s)) return;  // CONCATENAÇÃO MÚLTIPLA
-    // if (Is_String(s)) return; // CONCATENAÇÃO MÚLTIPLA
-    multiplication(s);           // MULTIPLICAÇÃO
-}
-
-void parse_slash(STACK *s) {
-    // if (Is_array(s)) return;  // 
-    // if (Is_String(s)) return; // 
-    division(s);  
-}
-
-void parse_left_parenthesis(STACK *s) {
-    // if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    decrement(s);  
-}
-
-void parse_right_parenthesis(STACK *s) {
-    // if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    increment(s);  
-}
-
-void parse_percentage(STACK *s) {
-    // if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    module(s);  
-}
-
-void parse_tilde(STACK *s) {
-    // if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    not_bitwise(s);  
-}
-
-void parse_equal(STACK *s) {
-    // if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    Is_equal(s);
-}
-
-void parse_less_than(STACK *s) {
-   //  if (Is_array(s)) return;  //
-   //  if (Is_String(s)) return; //
-    Is_lower(s);
-}
-
-void parse_more_than(STACK *s) {
-   //  if (Is_array(s)) return;  //
-    // if (Is_String(s)) return; //
-    Is_greater(s);
-}
-
-void parse_pop(STACK *s) {pop(s);}
 
 void parse_number(STACK *s, char *token) {
     if (Is_Double(token)) push_DOUBLE(s,convert_string_to_double(token)); // TOKEN -> DOUBLE
     else push_INT(s, convert_string_to_int(token));                       // TOKEN -> INT
 }
 
-void parse_operators(STACK *s, char *token) {
-    char **operators = get_operators_token();
-    parse_operators_function *func_ptr = get_operators_function();
+void parse_array(STACK *s, char *token) {
+    int begin = s->pos;
+    char *array_content = get_array_content(token);
+    TOKENIZER *array = NULL;
+    array = tokenize(array, array_content);
+    parse_tokens(s, array);
+    create_array(s, s->pos - begin);
+}
 
-    for (int i = 0; i < 34; i++) {
-        if (strcmp(token, operators[i]) == 0) {
-            func_ptr[i](s); return;
-        }   
+void parse_block(STACK *s, char *token) {
+    char *block = malloc(sizeof(char) * 10240);
+    block = token;
+    push_BLOCK(s, block);
+}
+
+int get_operands_state(char *token) {
+    int state = 0, number_of_operands = 5;
+    int (*operand_type[]) (char *token) = {
+        Is_token_number,
+        Is_token_array,
+        Is_token_string,
+        Is_token_variable,
+        Is_token_block
+    };
+    for (; state < number_of_operands; state++) {
+        if (operand_type[state](token)) break;
     }
+    if (state == number_of_operands) state = -1;
+    return state;
 }
 
 int parse_operands(STACK *s, char *token) {
-    int *operands = get_operands_state(token);
-    parse_operands_function *func_ptr = get_operands_function();
-
-    for(int i = 0; i < 3; i++) {
-        if (operands[i]) {
-            func_ptr[i](s, token); return 1;
-        }
-    }
-    return 0;
+    int state = get_operands_state(token);
+    if (state == -1) return 0;
+    void (*parse_operand[]) (STACK *s, char *token) = {
+        parse_number,
+        parse_array,
+        create_string,
+        parse_variables,
+        parse_block
+    };
+    parse_operand[state](s, token);
+    return 1;
 }
 
-void parse(STACK * s, char* line) {
-    for (char* token = strtok(line, " \t\n"); token != NULL; token = strtok(NULL, " \t\n")) {
-        if (!parse_operands(s, token)) parse_operators(s, token);
+int get_operation_state(STACK *s, char *token) {
+    int state = 0;
+    int (*operation_type[]) (STACK *s, char *token) = {
+        Is_arithmetic_operation,
+        Is_logic_operation,
+        Is_string_operation,
+        Is_array_operation,
+        Is_stack_operation,
+        Is_input_output_operation,
+        Is_block_operation
+    };
+    for (; state < 7; state++) {
+        if (operation_type[state](s, token)) break;
+    }
+    return state;
+}
+
+void parse_operations(STACK *s, char *token) {
+    int state = get_operation_state(s, token);
+    void (*handle_operation[]) (STACK *s, char *token) = {
+        handle_arithmetic_operation,
+        handle_logic_operation,
+        handle_string_operation,
+        handle_array_operation,
+        handle_stack_operation,
+        handle_input_output_operation,
+        handle_block_operation
+    };
+    handle_operation[state](s, token);
+}
+
+void parse (STACK *s, char *token) {
+    if (!parse_operands(s, token)) parse_operations(s, token);
+}
+
+void parse_tokens(STACK *s, TOKENIZER *tokenizer) {
+    for (; tokenizer != NULL; tokenizer = tokenizer->next_token) {
+        parse(s, tokenizer->token);
     }
 }
