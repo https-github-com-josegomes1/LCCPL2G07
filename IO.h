@@ -4,7 +4,7 @@
 #define IO_H
 
 /** \brief converte uma string em um inteiro */
-int convert_string_to_int(char *string);
+long convert_string_to_int(char *string);
 
 /** \brief converte uma string em um inteiro */
 double convert_string_to_double(char *string);
@@ -21,10 +21,16 @@ int Is_String (STACK * s);
 /** \brief faz a leitura de uma linha e da push da string para a stack */
 void read_line(STACK * s);
 
+/** \brief mostra o conteúdo do array */
+void print_array(STACK *s, DATA a);
+
 /** \brief mostra o conteúdo da stack */
 void print_stack(STACK *s);
 
 /** \brief mostra o conteudo da DATA */
-void print_data(DATA data);
+void print_data(STACK *s, DATA data);
+
+/** \brief faz a leitura de todo o input do usuário até encontrar o EOF */
+void read_all_input(STACK *s);
 
 #endif
