@@ -6,30 +6,30 @@
 #include "stack.h"
 #include "IO.h"
 
-void duplicate_top(STACK *s) { // 1 2   <- STACK -> VALORES
-    push(s, top(s));       // 1 2 2 <- push  -> 2
+void duplicate_top(STACK *s) {
+    push(s, top(s));
 }  
 
-void swap_top (STACK *s) { // 1 2 3 <- STACK -> VALORES
-    DATA data1 = pop(s);    // 1 2   <- pop   -> 3
-    DATA data2 = pop(s);    // 1     <- pop   -> 2
-    push(s, data1);         // 1 3   <- push  -> 2
-    push(s, data2);         // 1 3 2 <- push  -> 3            
+void swap_top (STACK *s) { 
+    DATA data1 = pop(s);    
+    DATA data2 = pop(s);  
+    push(s, data1);       
+    push(s, data2);                   
 }
 
-void rotate_top(STACK *s) { // 1 2 3 4 5 <- STACK -> VALORES
-    DATA data1 = pop(s);    // 1 2 3 4   <- pop   -> 5
-    DATA data2 = pop(s);    // 1 2 3     <- pop   -> 4
-    DATA data3 = pop(s);    // 1 2       <- pop   -> 3   
-    push(s, data2);         // 1 2 4     <- push  -> 4
-    push(s, data1);         // 1 2 4 5   <. push  -> 5
-    push(s, data3);         // 1 2 4 5 3 <- push  -> 3
+void rotate_top(STACK *s) { 
+    DATA data1 = pop(s);    
+    DATA data2 = pop(s);    
+    DATA data3 = pop(s);      
+    push(s, data2);         
+    push(s, data1);         
+    push(s, data3);        
 }
 
-void copy_nth_element(STACK *s) {  // 7 2 3 2 <- STACK -> VALORES
-    int n = pop_INT(s);            // 7 2 3   <- pop   -> 2 
-    push(s, s->stack[s->pos - n]); // 7 2 3 7 <- push  -> 7
-}                                  // 2 1 0   <- posição
+void copy_nth_element(STACK *s) { 
+    int n = pop_INT(s);            
+    push(s, s->stack[s->pos - n]);
+}
 
 void convert_stack_to_int(STACK *s) {     
     if (s->stack[s->pos].type == INT) return; // Já é um inteiro, não precisa converter                       
@@ -60,7 +60,7 @@ void convert_stack_to_string(STACK * s) {
     DATA elem = pop(s);
     char * string = malloc(sizeof(char) * 20); // 20 -> QUANTIDADE MÁXIMA DE DÍGITOS
     if (elem.type == INT) {                   
-        snprintf(string, 20, "%d", elem.INT); // INT -> STRING                                   
+        snprintf(string, 20, "%ld", elem.INT); // INT -> STRING                                   
         push_STRING(s, string); return;
     }
     if (elem.type == DOUBLE) {                   
