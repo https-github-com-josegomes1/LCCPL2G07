@@ -3,6 +3,8 @@
 #ifndef MATH_H
 #define MATH_H
 
+#include "stack.h"
+
 /** \brief efetua uma operação de soma e da push do resultado para stack */
 void sum(STACK *s);
 
