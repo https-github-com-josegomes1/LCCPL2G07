@@ -1,59 +1,39 @@
-/** @file Arquivo que contém as funções do parser.c e os typedefs dos apontadores para função */
+/** @file Arquivo que contém as funções do parser.c */
 
-#ifndef PARSE_H
-#define PARSE_H
+#ifndef PARSER_H
+#define PARSER_H
 
 #include "stack.h"
+#include "tokenizer.h"
 
-/** \brief resultante do token "+", efetua uma operação consoante o tipo do elemento */
-void parse_plus(STACK *s);
+/** \brief da parse das variáveis */
+void parse_variables(STACK *s, char *token);
 
-/** \brief resultante do token "*", efetua uma operação consoante o tipo do elemento */
-void parse_asterisk(STACK *s);
-
-/** \brief resultante do token "/", efetua uma operação consoante o tipo do elemento */
-void parse_slash(STACK *s);
-
-/** \brief resultante do token "(", efetua uma operação consoante o tipo do elemento */
-void parse_left_parenthesis(STACK *s);
-
-/** \brief resultante do token ")", efetua uma operação consoante o tipo do elemento */
-void parse_right_parenthesis(STACK *s);
-
-/** \brief resultante do token "%", efetua uma operação consoante o tipo do elemento */
-void parse_percentage(STACK *s);
-
-/** \brief resultante do token "~", efetua uma operação consoante o tipo do elemento */
-void parse_tilde(STACK *s);
-
-/** \brief resultante do token "=", efetua uma operação consoante o tipo do elemento */
-void parse_equal(STACK *s);
-
-/** \brief resultante do token "<", efetua uma operação consoante o tipo do elemento */
-void parse_less_than(STACK *s);
-
-/** \brief resultante do token ">", efetua uma operação consoante o tipo do elemento */
-void parse_more_than(STACK *s);
-
-/** \brief para não haver conflitos de tipo, esta função passa como intermédia para fazer o pop */
-void parse_pop(STACK *s);
-
-/** \brief converte uma string em número e da push deste para stack */
+/** \brief converte o token em INT ou DOUBLE*/
 void parse_number(STACK *s, char *token);
 
-/** \brief Compara o token com o array de tokens possíveis e passa para outra função efetuar a operação*/
-void parse_operators(STACK *s, char *token);
+/** \brief converte o token em array e analisa o conteúdo do mesmo */
+void parse_array(STACK *s, char *token);
 
-/** \brief Analise se o token é um operando e em caso positivo, passa para outra função */
+/** \brief converte o token em bloco */
+void parse_block(STACK *s, char *token);
+
+/** \brief função intermédia para determinar é o tipo de operando correspondente ao token */
+int get_operands_state(char *token);
+
+/** \brief função intermédia para efetuar o parse de um operando */
 int parse_operands(STACK *s, char *token);
 
-/** \brief Divide a string em tokens e passa-os para outra função analisar */
-void parse(STACK *s, char*);
+/** \brief função intermédia para determinar é o tipo de operador correspondente ao token */
+int get_operation_state(STACK *s, char *token);
 
-/** \brief parse_operators_function - apontador para funções de operadores */
-typedef void (*parse_operators_function)(STACK*s);
+/** \brief função intermédia para efetuar uma operação */
+void parse_operations(STACK *s, char *token);
 
-/** \brief parse_operands_function - apontador para funções de operandos */
-typedef void (*parse_operands_function) (STACK*s, char *token);
+/** \brief faz parse de um operando ou operador */
+void parse (STACK *s, char *token);
+
+/** \brief da parse dos tokens presentes na struct tokenizer */
+void parse_tokens(STACK *s, TOKENIZER *tokenizer);
 
 #endif
