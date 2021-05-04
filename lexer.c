@@ -79,14 +79,10 @@ int Is_string_operation(STACK *s, char *token) {
             return has_type(s->stack[s->pos - 1], STRING) && has_type(top(s), NUMBER);
         case '#':
         case '/':
+        case '+':
             return (has_type(s->stack[s->pos - 1], STRING) && has_type(top(s), STRING)) ||
                    (has_type(s->stack[s->pos - 1], STRING) && has_type(top(s), CHAR)) ||
                    (has_type(s->stack[s->pos - 1], CHAR) && has_type(top(s), STRING));
-                   
-        case '+':
-            return (has_type(s->stack[s->pos], STRING) && has_type(s->stack[s->pos - 1], STRING)) ||
-                   (has_type(s->stack[s->pos], STRING) && has_type(s->stack[s->pos - 1], CHAR)) ||
-                   (has_type(s->stack[s->pos], CHAR) && has_type(s->stack[s->pos - 1], STRING)); 
     }
     return 0;
 }
