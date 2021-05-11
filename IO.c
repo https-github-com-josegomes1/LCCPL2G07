@@ -20,7 +20,7 @@ long convert_string_to_int(char *string) {
 }
 
 int Is_Double(char *token) {
-    for (int i = 0; token[i]; i++) {
+    for (int i = 0; token[i] != '\0'; i++) {
         if (token[i] == '.') return 1;
     }
     return 0;
