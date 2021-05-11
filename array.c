@@ -108,15 +108,15 @@ void concatenate_array_array (STACK *s) {
 
 void concatenate_array(STACK *s) {
 
-    if (s->stack[s->pos].type != ARRAY && s->stack[s->pos - 1].type == ARRAY) {
+    if (!has_type(s->stack[s->pos], ARRAY) && has_type(s->stack[s->pos - 1], ARRAY)) {
         concatenate_array_element(s); return;
     }
 
-    if (s->stack[s->pos].type == ARRAY && s->stack[s->pos - 1].type != ARRAY) {
+    if (has_type(s->stack[s->pos], ARRAY) && !has_type(s->stack[s->pos - 1], ARRAY)) {
         concatenate_element_array(s); return;
     }
 
-    if (s->stack[s->pos].type == ARRAY && s->stack[s->pos - 1].type == ARRAY) {
+    if (has_type(s->stack[s->pos], ARRAY) && has_type(s->stack[s->pos - 1], ARRAY)) {
         concatenate_array_array(s); return;
     }
 }
