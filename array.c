@@ -42,7 +42,7 @@ void range_array(STACK * s) {
         }
         create_array(s, size);
     }
-    else {
+    else if (has_type(s->stack[s->pos], ARRAY)) {
         DATA a = pop(s);
         push_INT(s, a.array.size);
     }
