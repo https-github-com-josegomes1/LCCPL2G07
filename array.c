@@ -35,7 +35,7 @@ void create_array(STACK * s, int size) {
 }
 
 void range_array(STACK * s) {
-    if (s->stack[s->pos].type == INT) {
+    if (has_type(s->stack[s->pos], INTEGER)) {
         int size = pop_INT(s);
         for (int i = 0; i < size; i++) {
             push_INT(s, i);
